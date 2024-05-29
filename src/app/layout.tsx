@@ -1,12 +1,7 @@
-'use client'
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import { theme, darkTheme } from "@/theme";
-import { ThemeProvider } from '@mui/material/styles';
-import { useState } from "react";
-import Navbar from "./components/Navbar";
+import { StyledRoot } from "./components/StyledRoot";
 
 
 /* const inter = Inter({ subsets: ["latin"] });
@@ -21,15 +16,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isDarkTheme, setTheme] = useState(false)
   return (
     <html lang="en">
-      <body style={{ margin: 0 }} /* className={inter.className} */>
+      <body style={{ margin: 0 }}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={isDarkTheme ? darkTheme : theme}>
-            <Navbar />
+          <StyledRoot>
             {children}
-          </ThemeProvider>
+          </StyledRoot>
         </AppRouterCacheProvider>
       </body>
     </html>
