@@ -1,4 +1,3 @@
-'use client'
 import AppBar from '@mui/material/AppBar';
 import { Box, Toolbar, IconButton, Typography, Container, List, ListItem, ListItemButton, ListItemText, Drawer, ToggleButtonGroup, ToggleButton, Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,7 +20,7 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
     },
     {
         name: 'Calculadora hipotecaria',
-        href: '/calculadora-hipotecaria',
+        href: '/calculadora-hipotecaria/sistema-frances',
     }]
     const pageType = usePathname();
     const [isConfigOpen, setIsConfigOpen] = useState(false)
@@ -123,14 +122,13 @@ const DrawerConfiguration = ({ handleChangeTheme, themeSelected }: DrawerConfigu
             <Grid item xs={12}>
                 <Typography variant='h6' sx={{ textAlign: 'center' }}>Modo:</Typography>
                 <ToggleButtonGroup
-                    color="primary"
                     value={themeSelected}
                     aria-label="Themes selection"
                 >
-                    <ToggleButton onClick={() => handleChangeTheme(Themes.LIGTH)} value={Themes.LIGTH}><LightModeIcon />Claro</ToggleButton>
+                    <ToggleButton style={{ color: "rgba(232, 195, 158, 1)" }} onClick={() => handleChangeTheme(Themes.LIGTH)} value={Themes.LIGTH}><LightModeIcon />Claro</ToggleButton>
                     <ToggleButton onClick={() => handleChangeTheme(Themes.DARK)} value={Themes.DARK}><DarkModeIcon />Oscuro</ToggleButton>
                 </ToggleButtonGroup>
             </Grid>
-        </Grid>
+        </Grid >
     )
 }

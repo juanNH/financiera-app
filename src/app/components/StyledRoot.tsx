@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme, darkTheme, Themes } from './../theme';
 import { useState } from 'react';
 import Navbar from './Navbar';
+import { CssBaseline } from "@mui/material";
 
 
 
@@ -21,8 +22,9 @@ export function StyledRoot({
     }
     return (
         <ThemeProvider theme={themesDictionary[themeSelected]}>
-            <Navbar handleChangeTheme={handleChangeTheme} themeSelected={themeSelected}/>
+            <CssBaseline />
+            <Navbar handleChangeTheme={handleChangeTheme} themeSelected={themeSelected} />
             {children}
-        </ThemeProvider>
+        </ThemeProvider >
     );
 }

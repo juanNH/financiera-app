@@ -14,14 +14,20 @@ const roboto = Roboto({
 
 const theme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
-      main: "rgba(232,195,158,1)",
-      dark: "rgba(175,141,106,1)",
+      main: 'rgba(232, 195, 158, 1)', // Primary color
     },
-    secondary: { main: "#ffffff" },
-    warning: {
-      main: "rgba(175,141,106,0.6)"
-    }
+    secondary: {
+      main: 'rgb(255, 255, 255)', // A complementary blue for secondary
+    },
+    text: {
+      primary: '#1A1A1A', // Dark text for light theme
+      secondary: '#757575', // Light grey for secondary text
+    },
+    background: {
+      default: '#f5f5f5', // Light background color
+    },
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -33,15 +39,21 @@ const darkTheme = createTheme({
     fontFamily: roboto.style.fontFamily,
   },
   palette: {
+    mode: 'dark',
     primary: {
-      main: "rgba(23, 60, 97,1)",
-      dark: "rgba(80, 114, 149,1)",
+      main: 'rgba(232, 195, 158, 1)', // Primary color (can be adjusted for dark theme)
     },
-    secondary: { main: "#000000" },
-    warning: {
-      main: "rgba(80, 114, 149,0.6)"
-    }
-  },
+    secondary: {
+      main: '#F5CA8E', // A lighter version of primary for dark theme contrast
+    },
+    text: {
+      primary: '#fff', // White text for dark theme
+      secondary: '#e0e0e0', // Light grey for secondary text
+    },
+    background: {
+      default: '#212121', // Dark background color
+    },
+  }
 });
 
 export { theme, darkTheme, Themes };

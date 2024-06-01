@@ -1,1 +1,1 @@
-export * from './VirtualizatedTable';
+export * from './TableComponent';
