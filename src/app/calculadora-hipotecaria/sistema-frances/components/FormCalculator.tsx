@@ -3,6 +3,7 @@ import { Paper, TextField, InputAdornment, Box, Button, Grid } from '@mui/materi
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 /**
  * strings to reduce writting
@@ -50,11 +51,15 @@ export type FormFields = z.infer<typeof FormSchema>;
 
 /**
  * @param handleCalculate Function to call after form is correct.
+ * @param handleExportTable Function to export table to excel
+ * @param disabledExportButton boolean to handle button when is exporting
  */
 interface Props {
-    handleCalculate: (data: FormFields) => void;
+    handleCalculate: (data: FormFields) => void,
+    handleExportTable: (title?: string, worksheetname?: string) => void,
+    disabledExportButton: boolean,
 }
-export const FormCalculator = ({ handleCalculate }: Props) => {
+export const FormCalculator = ({ handleCalculate, handleExportTable, disabledExportButton }: Props) => {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({ resolver: zodResolver(FormSchema) })
     return (
         <Paper variant="outlined" component={Grid} item xs={12} md={12} lg={3} sx={{ p: 1 }}>
@@ -96,6 +101,16 @@ export const FormCalculator = ({ handleCalculate }: Props) => {
                     <Button variant="outlined" type="submit" disabled={isSubmitting}> {isSubmitting ? 'Calculando...' : 'Calcular'}</Button>
                 </Box>
             </form>
+            <Button
+                sx={{ width: "100%", mt: 3 }}
+                onClick={() => handleExportTable('calculo-prestamo', 'calculo-prestamo')}
+                variant="outlined"
+                type="submit"
+                disabled={disabledExportButton}
+            >
+                Exportar a excel
+                <FileDownloadIcon />
+            </Button>
         </Paper>
     )
 }

@@ -27,7 +27,7 @@ export const TableMortgageCalculator = ({ data, isLoading }: Props) => {
                 text: 'Capital pagado'
             },
             {
-                text: 'Saldo restante'
+                text: 'Capital restante'
             }]}
             tableLabel={'Tabla de calculo de prestamo.'}
             isLoading={isLoading}
