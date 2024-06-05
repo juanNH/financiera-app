@@ -36,7 +36,6 @@ export default function page() {
         } catch (error) {
             setData(prevState => ({ ...prevState, isLoading: false }))
         }
-
     }
     const handleExportTable = async (title?: string, worksheetname?: string) => {
         try {
@@ -81,7 +80,6 @@ export default function page() {
                     />
                 </Grid>
             </Grid>
-
         </Box >
     )
 }

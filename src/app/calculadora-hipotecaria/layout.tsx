@@ -13,9 +13,9 @@ export default function RootLayout({
         setValue(newValue);
     };
     return (
-        <Box sx={{ padding: { xs: 0, md: '2rem', lg: '4rem' } }}>
+        <Box sx={{ padding: { xs: 0, md: '2rem', lg: '2rem 4rem' } }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="tabs de calculadora de prestamos">
+                <Tabs value={value} onChange={handleChange} aria-label="Tabs de calculadora de prestamos.">
                     <Tab
                         label="Sistema frances"
                         component={Link}
