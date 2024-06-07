@@ -2,7 +2,7 @@ import { CalculateLoanParams } from "@/services/loan-calculator/get.loan-calcula
 import axios from "axios";
 import { NextRequest } from "next/server";
 import { calculateLoanAdapter } from "../adapter";
-import axiosInstance from "../../axios.instance";
+import { axiosInstanceServer } from "../../axios.instance";
 
 const GET = async (req: NextRequest) => {
 
@@ -13,7 +13,7 @@ const GET = async (req: NextRequest) => {
         yearlyInterest: Number(searchParams.get('yearlyInterest')) as number,
         totalYears: Number(searchParams.get('totalYears')) as number,
     }
-    const response = await axiosInstance.get<CalculateLoanFrenchSystemResponse>('/loan-calculator/table-french-system', { params }); // Include params object
+    const response = await axiosInstanceServer.get<CalculateLoanFrenchSystemResponse>('/loan-calculator/table-french-system', { params }); // Include params object
     const responseAdapted = calculateLoanAdapter(response.data)
     // Check for successful response status code
     if (response.status === 200) {

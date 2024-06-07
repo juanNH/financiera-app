@@ -6,9 +6,10 @@ import { DataState } from '@/commons/models/structure.interface'
 import { FormCalculator, FormFields } from './components/FormCalculator'
 import { CalculateLoanFrenchSystem } from '@/app/api/loan/adapter'
 import { ChartSection } from './components/ChartSection'
-import { Grid, Box } from '@mui/material';
+import { Grid } from '@mui/material';
 import { DescriptionSection } from './components/DescriptionSection'
 import * as XLSX from "xlsx";
+
 
 export default function page() {
     const [data, setData] = useState<DataState<CalculateLoanFrenchSystem>>({
@@ -64,7 +65,7 @@ export default function page() {
         }
     };
     return (
-        <Box sx={{ pt: 2 }}>
+        <main>
             <Grid container>
                 <DescriptionSection />
                 <FormCalculator
@@ -80,6 +81,6 @@ export default function page() {
                     />
                 </Grid>
             </Grid>
-        </Box >
+        </main>
     )
 }

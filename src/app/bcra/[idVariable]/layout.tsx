@@ -1,10 +1,6 @@
-
 import React from 'react'
-import { VariablesList } from './components/VariablesList';
-import { DescriptionSection } from './components/DescriptionSection';
-import { variableListBcra } from '@/services/bcra/graphql.variableList.service';
-import { Metadata } from 'next';
-
+import { Metadata } from 'next'
+import { Box } from '@mui/material';
 
 export const metadata: Metadata = {
     title: "MiFinanciero",
@@ -14,19 +10,19 @@ export const metadata: Metadata = {
     viewport: { width: "device-width", initialScale: 1 },
     authors: [{ name: "Juan", url: "https://www.linkedin.com/in/juannherrerad/" }],
     twitter: {
-      title: 'MiFinanciero',
-      description: 'MiFinanciero es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.',
+        title: 'MiFinanciero',
+        description: 'MiFinanciero es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.',
     },
-  };
-const page = async () => {
-    const data = await variableListBcra();
-
+};
+export default function RootLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
-        <main>
-            <DescriptionSection />
-            <VariablesList data={data || []}/>
-        </main>
+        <Box sx={{ padding: { xs: 0, md: '0 2rem', lg: '0 4rem' } }}>
+            {children}
+        </Box>
     )
 }
 
-export default page

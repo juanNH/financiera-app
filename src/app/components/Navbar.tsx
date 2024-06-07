@@ -22,7 +22,11 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
         name: 'Calculadora hipotecaria',
         href: '/calculadora-hipotecaria/sistema-frances',
     }]
-    const pageType = usePathname();
+    const path = usePathname();
+    const partialPath = path.substring(
+        path.indexOf("/") + 1,
+        path.lastIndexOf("/") || path.indexOf("/") + 5,
+    );
     const [isConfigOpen, setIsConfigOpen] = useState(false)
     return (
         <>
@@ -64,9 +68,9 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
                                         padding: 0,
                                         justifyContent: 'center',
                                         alignContent: 'center',
-                                        borderBottom: pageType === page.href ? "solid" : "none",
-                                        borderBottomColor: pageType === page.href ? "primary.dark" : "none",
-                                        borderBottomWidth: pageType === page.href ? "4px" : "none",
+                                        borderBottom: page.href.includes(partialPath) && path !== "/" ? "solid" : "none",
+                                        borderBottomColor: page.href.includes(partialPath) && path !== "/" ? "primary.dark" : "none",
+                                        borderBottomWidth: page.href.includes(partialPath) && path !== "/" ? "4px" : "none",
                                     }}
                                 >
                                     <ListItemButton
@@ -76,7 +80,7 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
                                             p: 0,
                                             textAlign: 'center',
                                             height: '100%',
-                                            color: pageType === page.href ? 'primary.dark' : 'primary.main',
+                                            color: page.href.includes(partialPath) && path !== "/" ? 'primary.dark' : 'primary.main',
                                             "&:hover": {
                                                 color: 'primary.dark'
                                             }

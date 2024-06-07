@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Box } from '@mui/material';
 
@@ -7,7 +6,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [value, setValue] = React.useState(0);
     return (
         <Box sx={{ padding: { xs: 0, md: '2rem', lg: '2rem 4rem' } }}>
             {children}

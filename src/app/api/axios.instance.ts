@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const axiosInstanceServer = axios.create({
     baseURL: process.env.API_URL
 })
-export default axiosInstance;
+
+const axiosInstanceClient = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL
+})
+
+export  {axiosInstanceServer, axiosInstanceClient};

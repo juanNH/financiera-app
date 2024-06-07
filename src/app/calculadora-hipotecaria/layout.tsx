@@ -2,7 +2,6 @@
 import React from 'react'
 import { Box, Tabs, Tab } from '@mui/material';
 import Link from 'next/link';
-
 export default function RootLayout({
     children,
 }: Readonly<{

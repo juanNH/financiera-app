@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Grid, Paper } from '@mui/material';
+import { Grid, Paper, useTheme } from '@mui/material';
 import { CalculateLoanFrenchSystem } from '@/app/api/loan/adapter';
 import { TooltipContextTitle } from '@/commons/models/chartjs.types';
 import roundToTwoDecimals from '@/commons/helpers/roundToTwoDecimals';
@@ -39,6 +39,8 @@ interface DataSet {
     yAxisID: string;
 }
 export const ChartSection = ({ data }: Props) => {
+    const theme = useTheme();
+    const textColor = theme.palette.text.primary;
     const options = {
         responsive: true,
         interaction: {
@@ -50,12 +52,18 @@ export const ChartSection = ({ data }: Props) => {
             title: {
                 display: true,
                 text: `Grafico de evolucion de pago atraves de los meses de un total a pagar de $${data.totalToPay}`,
+                color: textColor,
             },
             tooltip: {
                 callbacks: {
                     title: function (ctx: any | TooltipContextTitle<DataSet>[]) {
                         return `Mes: ${ctx[0].label} - Total restante: $${roundToTwoDecimals(data.totalToPay - (data.monthlyPayment * Number(ctx[0].label)))}`;
                     },
+                }
+            },
+            legend: {
+                labels: {
+                    color: textColor,
                 }
             }
         },
@@ -64,6 +72,10 @@ export const ChartSection = ({ data }: Props) => {
                 type: 'linear' as const,
                 display: true,
                 position: 'left' as const,
+                ticks: { color: textColor }
+            },
+            x: {
+                ticks: { color: textColor }
             },
             y1: {
                 type: 'linear' as const,
@@ -72,6 +84,7 @@ export const ChartSection = ({ data }: Props) => {
                 grid: {
                     drawOnChartArea: false,
                 },
+                ticks: { color: textColor }
             },
         },
 

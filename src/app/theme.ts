@@ -16,10 +16,10 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: 'rgba(232, 195, 158, 1)', // Primary color
+      main: '#ed6c02', // Primary color
     },
     secondary: {
-      main: 'rgb(255, 255, 255)', // A complementary blue for secondary
+      main: '#fff', // A complementary blue for secondary
     },
     text: {
       primary: '#1A1A1A', // Dark text for light theme
@@ -41,7 +41,7 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: 'rgba(232, 195, 158, 1)', // Primary color (can be adjusted for dark theme)
+      main: '#E8C39E', // Primary color (can be adjusted for dark theme)
     },
     secondary: {
       main: '#F5CA8E', // A lighter version of primary for dark theme contrast
