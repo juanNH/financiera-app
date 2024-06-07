@@ -13,7 +13,6 @@ export async function variableListBcra(): Promise<BcraVariable[] | undefined> {
     } 
 `
     try {
-        console.log('pasa gql')
         const { data, errors } = await getClient().query({ query })
         console.log('ss', data, errors)
         if (errors) {
