@@ -25,6 +25,9 @@ export default function RootLayout({
 
   return (
     <html lang="es">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body style={{ margin: 0 }}>
         <ApolloWrapper>
           <AppRouterCacheProvider>

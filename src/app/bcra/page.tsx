@@ -2,7 +2,7 @@
 import React from 'react'
 import { VariablesList } from './components/VariablesList';
 import { DescriptionSection } from './components/DescriptionSection';
-import { variableListBcra } from '@/services/bcra/graphql.variableList.service';
+import { BcraVariable, variableListBcra } from '@/services/bcra/graphql.variableList.service';
 import { Metadata } from 'next';
 
 
@@ -18,8 +18,13 @@ export const metadata: Metadata = {
   },
 };
 export default async function Page() {
-  const data = await variableListBcra();
-
+  let data:BcraVariable[] = [];
+  try {
+    data = await variableListBcra() || [];
+  } catch (error) {
+    console.error(error)
+  }
+  console.log('first', data)
   return (
     <main>
       <DescriptionSection />

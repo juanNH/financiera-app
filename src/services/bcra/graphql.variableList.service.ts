@@ -13,7 +13,9 @@ export async function variableListBcra(): Promise<BcraVariable[] | undefined> {
     } 
 `
     try {
+        console.log('pasa gql')
         const { data, errors } = await getClient().query({ query })
+        console.log('ss', data, errors)
         if (errors) {
             console.error('GraphQL errors:', errors);
             return undefined; // Handle errors appropriately
@@ -22,7 +24,7 @@ export async function variableListBcra(): Promise<BcraVariable[] | undefined> {
         return data.variablesList as BcraVariable[];
     } catch (error) {
         console.error('Error fetching data:', error);
-        return undefined; // Handle errors appropriately
+        throw error;
     }
 }
 
