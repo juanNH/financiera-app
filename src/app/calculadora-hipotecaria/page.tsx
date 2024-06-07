@@ -1,3 +1,4 @@
+import { WorkingFeature } from '@/commons/components/WorkingFeature';
 import { Metadata } from 'next';
 import React from 'react'
 
@@ -13,11 +14,11 @@ export const metadata: Metadata = {
   },
 };
 
-const page = () => {
+export default function Page() {
   return (
     <>
+          <WorkingFeature />
     </>
   )
 }
 
-export default page;

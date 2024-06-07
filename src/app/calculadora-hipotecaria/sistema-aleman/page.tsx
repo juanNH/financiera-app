@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const page = () => {
+export default function Page() {
   return (
     <main>
       <WorkingFeature />
@@ -22,4 +22,3 @@ export const page = () => {
   )
 }
 
-export default page;

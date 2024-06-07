@@ -8,7 +8,7 @@ import { DataState, Nulleable } from '@/commons/models/structure.interface'
 import { BcraVariable } from '@/services/bcra/graphql.variableList.service'
 
 
-export default function page() {
+export default function Page() {
     const [variableHistory, setVariableHistory] = useState<DataState<VariableHistory[]>>({
         data: [],
         isLoading: true,
