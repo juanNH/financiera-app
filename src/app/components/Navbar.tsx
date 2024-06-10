@@ -56,7 +56,7 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
                                     color: "warning.main",
                                 }}
                             >
-                                MiFinanciero
+                                MiFinancieroArg
                             </Typography>
                         </Box>
                         <List sx={{ display: { xs: 'none', md: 'flex', m: 0, p: 0 } }}>

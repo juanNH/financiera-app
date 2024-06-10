@@ -28,13 +28,6 @@ interface Props {
     variables: DataState<VariableHistory[]>,
     graphText?: string,
 }
-interface DataSet {
-    label: string;
-    data: number[];
-    borderColor: string;
-    backgroundColor: string;
-    yAxisID: string;
-}
 export const ChartVariable = ({ variables, graphText = "Cargando..." }: Props) => {
     const theme = useTheme();
     const textColor = theme.palette.text.primary;
@@ -98,7 +91,7 @@ export const ChartVariable = ({ variables, graphText = "Cargando..." }: Props) =
         ],
     };
     return (
-        <Paper sx={{ p: 2 }} variant="outlined">
+        <Paper sx={{ p: 2, width:'90%' }} variant="outlined">
             <Line options={options} data={datas} />
         </Paper>
     )
