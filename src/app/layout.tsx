@@ -4,7 +4,6 @@ import { StyledRoot } from "./components/StyledRoot";
 import { ApolloWrapper } from "@/lib/apolloWrapper";
 
 
-
 export const metadata: Metadata = {
   title: "MiFinanciero",
   description: "MiFinanciero es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.",

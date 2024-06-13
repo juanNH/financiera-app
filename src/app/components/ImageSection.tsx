@@ -6,7 +6,7 @@ import useWindowSize from '@/commons/hooks/useWindowSize';
 
 export const ImageSection = () => {
   const size = useWindowSize();
-
+  console.log(size,';asd')
   return (
     <Box sx={{ margin: { xs: 0, md: 'auto' } }}>
 

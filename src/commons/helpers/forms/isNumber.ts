@@ -7,7 +7,6 @@
 
 export function isNumber(msg: string, numberToCheck: string): string | boolean {
     const num = parseFloat(numberToCheck);
-    console.log(num)
     if (isNaN(num)) {
         return msg;
     }

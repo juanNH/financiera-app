@@ -13,7 +13,7 @@ import { DataState } from '@/commons/models/structure.interface';
 import { VariableHistory, variableHistory as variableHistoryFetch } from '@/services/bcra/get.variableHistory.service'
 import useWindowSize from '@/commons/hooks/useWindowSize';
 import Link from 'next/link';
-import { Typography, Box, Divider } from '@mui/material';
+import { Typography, Box, Divider, useTheme } from '@mui/material';
 
 const query = gql`
 query{  
@@ -171,10 +171,9 @@ export const BcraSwiper = () => {
                 isError: true,
             })
         }
-
-
-
     }
+    const theme = useTheme();
+    const backgroundColor = theme.palette.background.paper;
     useEffect(() => {
         if (variablesGraph) {
             const variablesFunc = variablesGraph
@@ -187,10 +186,11 @@ export const BcraSwiper = () => {
             <Divider />
             <Typography variant={'h3'} sx={{ fontSize: '1.4rem', textAlign: 'center', p: 1 }}>Variables Bcra</Typography>
             <Swiper
-                style={{ width: size.width >= 769 ? '50%' : '100%' }}
+                style={{ width: size.width >= 769 ? '50%' : (!variablesHistory.isLoading ? '100%' : '50%') }}
                 spaceBetween={30}
                 loop={true}
                 centeredSlides={true}
+
                 autoplay={{
                     delay: 8000,
                     disableOnInteraction: false,
@@ -202,7 +202,7 @@ export const BcraSwiper = () => {
                 modules={[Pagination, Navigation, Autoplay]}
                 className="mySwiper"
             >
-                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>
                         <Typography
                             sx={{ textDecoration: 'none' }}
@@ -217,7 +217,7 @@ export const BcraSwiper = () => {
                         data: variablesHistory.data.inflacionMensual,
                     }} graphText={variablesGraph?.variables?.inflacionMensual.descripcion || undefined} />
                 </SwiperSlide>
-                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>
                         <Typography
                             sx={{ textDecoration: 'none' }}
@@ -232,7 +232,7 @@ export const BcraSwiper = () => {
                         data: variablesHistory.data.inflacionInteranual,
                     }} graphText={variablesGraph?.variables?.inflacionInteranual.descripcion || undefined} />
                 </SwiperSlide>
-                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>
                         <Typography
                             sx={{ textDecoration: 'none' }}
@@ -247,7 +247,7 @@ export const BcraSwiper = () => {
                         data: variablesHistory.data.uva,
                     }} graphText={variablesGraph?.variables?.uva.descripcion || undefined} />
                 </SwiperSlide>
-                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>
                         <Typography
                             sx={{ textDecoration: 'none' }}
@@ -262,7 +262,7 @@ export const BcraSwiper = () => {
                         data: variablesHistory.data.baseMonetaria,
                     }} graphText={variablesGraph?.variables?.baseMonetaria.descripcion || undefined} />
                 </SwiperSlide>
-                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>
                         <Typography
                             sx={{ textDecoration: 'none' }}

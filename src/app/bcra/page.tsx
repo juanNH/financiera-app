@@ -24,7 +24,6 @@ export default async function Page() {
   } catch (error) {
     console.error(error)
   }
-  console.log('first', data)
   return (
     <main>
       <DescriptionSection />

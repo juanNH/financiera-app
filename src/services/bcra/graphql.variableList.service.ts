@@ -14,7 +14,6 @@ export async function variableListBcra(): Promise<BcraVariable[] | undefined> {
 `
     try {
         const { data, errors } = await getClient().query({ query })
-        console.log('ss', data, errors)
         if (errors) {
             console.error('GraphQL errors:', errors);
             return undefined; // Handle errors appropriately

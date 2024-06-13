@@ -4,6 +4,9 @@ import { theme, darkTheme, Themes } from './../theme';
 import { useState } from 'react';
 import Navbar from './Navbar';
 import { CssBaseline } from "@mui/material";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import 'dayjs/locale/es-mx';
 
 
 
@@ -22,9 +25,13 @@ export function StyledRoot({
     }
     return (
         <ThemeProvider theme={themesDictionary[themeSelected]}>
-            <CssBaseline />
-            <Navbar handleChangeTheme={handleChangeTheme} themeSelected={themeSelected} />
-            {children}
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx">
+
+                <CssBaseline />
+                <Navbar handleChangeTheme={handleChangeTheme} themeSelected={themeSelected} />
+                {children}
+            </LocalizationProvider>
+
         </ThemeProvider >
     );
 }

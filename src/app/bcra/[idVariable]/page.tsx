@@ -6,7 +6,14 @@ import { ChartVariable } from './components/ChartVariable'
 import { variableById } from '@/services/bcra/get.variableById.service'
 import { DataState, Nulleable } from '@/commons/models/structure.interface'
 import { BcraVariable } from '@/services/bcra/graphql.variableList.service'
+import { DateFormSection } from './components/DateFormSection'
 
+
+interface DateObj {
+    year: number;
+    month: number;
+    day: number;
+}
 
 export default function Page() {
     const [variableHistory, setVariableHistory] = useState<DataState<VariableHistory[]>>({
@@ -26,13 +33,29 @@ export default function Page() {
         path.length,
     );
     const today = new Date();
-    const date = {
+    const date: DateObj = {
         year: today.getFullYear(),
         month: today.getMonth(),
         day: today.getDate(),
     }
-    const callApi = async () => {
+    const handleSearchHistory = (startDate: Date, endDate: Date) => {
+        callApi({
+            year: startDate.getFullYear(),
+            month: startDate.getMonth(),
+            day: startDate.getDate(),
+        }, {
+            year: endDate.getFullYear(),
+            month: endDate.getMonth(),
+            day: endDate.getDate(),
+        })
+    }
+    const callApi = async (startDate: DateObj, endDate: DateObj) => {
         try {
+            setVariableHistory({
+                ...variableHistory,
+                isError: false,
+                isLoading: true,
+            })
             const variablePromise = variableById({
                 params: { idVariable: Number(idString) },
                 abortController: abortController.current
@@ -40,8 +63,8 @@ export default function Page() {
             const variableHistoryPromise = variableHistoryFetch({
                 params: {
                     id: Number(idString),
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
+                    startDate: `${startDate.year}-${startDate.month}-${startDate.day}`,
+                    endDate: `${endDate.year}-${endDate.month}-${endDate.day}`,
                 },
                 abortController: abortController.current
             });
@@ -50,11 +73,13 @@ export default function Page() {
                 ...variableHistory,
                 data: variableHistoryResponse,
                 isLoading: false,
+                isError: false,
             });
             setVariable({
                 ...variable,
                 data: variableResponse,
                 isLoading: false,
+                isError: false,
             })
         } catch (error) {
             console.error(error)
@@ -69,13 +94,19 @@ export default function Page() {
         }
     }
     useEffect(() => {
-        callApi()
+        callApi({ ...date, year: date.year - 1 }, date)
         return () => {
             abortController.current.abort();
         }
     }, [])
     return (
         <main>
+            <DateFormSection
+                startDate={`${date.day > 9 ? date.day : '0' + date.day.toString()}/${date.month > 9 ? date.month : '0' + date.month.toString()}/${date.year - 1}`}
+                endDate={`${date.day > 9 ? date.day : '0' + date.day.toString()}/${date.month > 9 ? date.month : '0' + date.month.toString()}/${date.year}`}
+                handleSearchHistory={handleSearchHistory}
+                dataIsLoading={variableHistory.isLoading}
+            />
             <ChartVariable variables={variableHistory} graphText={variable.data?.descripcion} />
         </main>
     )
