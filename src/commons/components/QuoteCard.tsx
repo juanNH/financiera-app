@@ -1,13 +1,10 @@
-'use client'
 import React from 'react'
-import { Typography, CardContent, useTheme, Paper } from '@mui/material';
+import { Typography, CardContent, Paper } from '@mui/material';
 
 import { Dolar } from '@/app/api/dolar/adapter';
 
 
 export const QuoteCard = (quote: Dolar) => {
-    const theme = useTheme();
-    const primaryColor = theme.palette.primary.main;
     const formattedDate = formatDate(quote.updateDate);
     return (
         <Paper variant="outlined" sx={{ '&:hover': { boxShadow: '0px 3px 5px rgba(237,108,2, 0.2)', } }}>
