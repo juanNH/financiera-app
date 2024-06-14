@@ -1,18 +1,17 @@
-import { axiosInstanceClient } from "@/app/api/axios.instance";
-import axios from "axios";
 import { BcraVariable } from "./graphql.variableList.service";
+import axios from "axios";
 
 interface Props {
     abortController?: AbortController
-    params: VaraibleHistoryParams
+    params: VariableHistoryParams
 }
-interface VaraibleHistoryParams {
+export interface VariableHistoryParams {
     idVariable: number
 }
 
 export const variableById = async ({ abortController, params }: Props) => {
     try {
-        const response = await axiosInstanceClient.get<BcraVariable>('/bcra/variable', { params, signal: abortController?.signal }); // Include params object
+        const response = await axios.get<BcraVariable>('/api/bcra/variableById', { params, signal: abortController?.signal }); // Include params object
         return response.data
     } catch (error) {
         throw error;

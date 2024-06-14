@@ -11,7 +11,6 @@ import { ChartVariable } from '../bcra/[idVariable]/components/ChartVariable';
 import { BcraVariable } from '@/services/bcra/graphql.variableList.service';
 import { DataState } from '@/commons/models/structure.interface';
 import { VariableHistory, variableHistory as variableHistoryFetch } from '@/services/bcra/get.variableHistory.service'
-import useWindowSize from '@/commons/hooks/useWindowSize';
 import Link from 'next/link';
 import { Typography, Box, Divider, useTheme } from '@mui/material';
 
@@ -76,7 +75,6 @@ interface VariablesHistory {
 }
 export const BcraSwiper = () => {
     const abortController = useRef(new AbortController())
-    const size = useWindowSize();
     const { data: variablesGraph, loading, error } = useQuery<GraphResponse>(query);
     const [variablesHistory, setVariablesHistory] = useState<DataState<VariablesHistory>>({
         isLoading: true,
@@ -182,11 +180,11 @@ export const BcraSwiper = () => {
 
     }, [variablesGraph])
     return (
-        <Box sx={{ width: '100%', m: '2rem 0' }}>
+        <Box sx={{ width: { xs: '100%', lg: '50%' }, m: '2rem 0' }}>
             <Divider />
             <Typography variant={'h3'} sx={{ fontSize: '1.4rem', textAlign: 'center', p: 1 }}>Variables Bcra</Typography>
             <Swiper
-                style={{ width: size.width >= 769 ? '50%' : (!variablesHistory.isLoading ? '100%' : '50%') }}
+                style={{ width: '100%' }}
                 spaceBetween={30}
                 loop={true}
                 centeredSlides={true}

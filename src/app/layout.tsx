@@ -27,7 +27,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body style={{ margin: 0 }}>
+      <body style={{ margin: '4rem 0 0 0' }}>
         <ApolloWrapper>
           <AppRouterCacheProvider>
             <StyledRoot>

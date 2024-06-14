@@ -1,5 +1,4 @@
 import { CalculateLoanParams } from "@/services/loan-calculator/get.loan-calculator.service";
-import axios from "axios";
 import { NextRequest } from "next/server";
 import { calculateLoanAdapter } from "../adapter";
 import { axiosInstanceServer } from "../../axios.instance";
@@ -14,9 +13,8 @@ const GET = async (req: NextRequest) => {
         totalYears: Number(searchParams.get('totalYears')) as number,
     }
     const response = await axiosInstanceServer.get<CalculateLoanFrenchSystemResponse>('/loan-calculator/table-french-system', { params }); // Include params object
-    const responseAdapted = calculateLoanAdapter(response.data)
-    // Check for successful response status code
     if (response.status === 200) {
+    const responseAdapted = calculateLoanAdapter(response.data)
         return Response.json({ ...responseAdapted }, { status: 200 })
     } else {
         return Response.json(`API request failed with status: ${response.status}`, { status: response.status });
