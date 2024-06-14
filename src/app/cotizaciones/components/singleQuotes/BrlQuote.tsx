@@ -1,10 +1,20 @@
-import React from 'react'
-import { brlQuote } from '@/services/dolars/othersQuotes/get.brl.service';
-import { QuoteCard } from '@/commons/components/QuoteCard';
+'use client';
 
-export const BrlQuote = async () => {
-    const uyuData = await brlQuote({ abortController: undefined });
+import React from 'react'
+import { QuoteCard } from '@/commons/components/QuoteCard';
+import { Quote, useQuotes } from '@/commons/hooks/useQuotes';
+import { Skeleton } from '@mui/material';
+
+export const BrlQuote = () => {
+    const { quote } = useQuotes(Quote.brl);
+    if (quote.isLoading) {
+        return (
+            <Skeleton variant="rectangular" >
+                <QuoteCard currency={''} type={''} name={''} buy={0} sell={0} updateDate={''} />
+            </Skeleton>
+        )
+    }
     return (
-        <QuoteCard {...uyuData} />
+        <QuoteCard {...quote.data} />
     )
 }

@@ -4,7 +4,7 @@ import { UyuQuote, ClpQuote, BrlQuote, EurQuote } from './singleQuotes';
 
 
 
-export const OthersQuotes = async () => {
+export const OthersQuotes = () => {
 
   return (
     <Grid container spacing={2} sx={{ p: '1rem 0' }}>

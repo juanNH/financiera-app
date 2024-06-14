@@ -1,29 +1,17 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import { dolars as dolarsFetch } from '@/services/dolars/get.dolars.service';
+import React from 'react'
 import { Box, Typography } from '@mui/material';
 import { DolarGrid } from './DolarGrid';
 import Link from 'next/link';
-import { Dolar } from '../api/dolar/adapter';
+import { useDolars } from '@/commons/hooks';
 
 export const DolarSection = () => {
-    const [dolars, setDolars] = useState<Dolar[]>([])
-    const abortController = useRef(new AbortController())
-    const apiFetch = async () => {
-        const dolars = await dolarsFetch({ abortController: undefined });
-        setDolars(dolars);
-    }
-    useEffect(() => {
-        apiFetch();
-        return () => {
-            abortController.current.abort;
-        }
-    }, [])
+    const {dolars} = useDolars();
 
     return (
         <Box sx={{ width: '80%', textAlign: 'center' }}>
             <Typography variant={'h3'} sx={{ fontSize: '1.4rem', textAlign: 'center', p: 1 }}>Dolares</Typography>
-            <DolarGrid dolars={dolars} />
+            <DolarGrid dolars={dolars} loadNumber={7}/>
             <Typography
                 sx={{ textDecoration: 'none' }}
                 href={`/cotizaciones`}

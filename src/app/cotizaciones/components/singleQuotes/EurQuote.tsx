@@ -1,10 +1,19 @@
+'use client';
 import React from 'react'
-import { eurQuote } from '@/services/dolars/othersQuotes/get.eur.service';
+import { Quote, useQuotes } from '@/commons/hooks/useQuotes';
 import { QuoteCard } from '@/commons/components/QuoteCard';
+import { Skeleton } from '@mui/material';
 
-export const EurQuote = async () => {
-    const uyuData = await eurQuote({ abortController: undefined });
+export const EurQuote = () => {
+    const { quote } = useQuotes(Quote.eur);
+    if (quote.isLoading) {
+        return (
+            <Skeleton variant="rectangular" >
+                <QuoteCard currency={''} type={''} name={''} buy={0} sell={0} updateDate={''} />
+            </Skeleton>
+        )
+    }
     return (
-        <QuoteCard {...uyuData} />
+        <QuoteCard {...quote.data} />
     )
 }
