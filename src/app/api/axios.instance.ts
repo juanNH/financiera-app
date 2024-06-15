@@ -25,6 +25,6 @@ const axiosDolarApiServer = axios.create({
  * Instance of Bcra server 
  */
 const axiosBcraServer = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BCRA_API_UR
+    baseURL: process.env.NEXT_PUBLIC_BCRA_API_URL
 })
 export  {axiosInstanceServer, axiosInstanceClient, axiosDolarApiServer, axiosBcraServer};
