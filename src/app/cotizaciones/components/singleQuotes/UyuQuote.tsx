@@ -1,7 +1,7 @@
-'use client'
+'use client';
 import React from 'react'
-import { QuoteCard } from '@/commons/components/QuoteCard';
 import { Quote, useQuotes } from '@/commons/hooks/useQuotes';
+import { QuoteCard } from '@/commons/components/QuoteCard';
 import { Skeleton } from '@mui/material';
 
 export const UyuQuote = () => {

@@ -1,6 +1,20 @@
 import React from 'react'
 import { Paper, Typography } from '@mui/material';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "FinherArg - Informacion",
+    description: "FinherArg es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.",
+    // Add additional metadata here
+    keywords: ['api', 'bcra', 'dolar', 'finherarg'],
+    authors: [{ name: "Juan", url: "https://www.linkedin.com/in/juannherrerad/" }],
+    twitter: {
+      title: 'FinherArg',
+      description: 'FinherArg es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.',
+    },
+  };
+  
 
 const Page = () => {
     return (
