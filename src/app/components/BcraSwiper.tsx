@@ -87,20 +87,25 @@ export const BcraSwiper = () => {
             reservasInternacionales: [],
         }
     })
-    const today = new Date();
-    const date = {
-        year: today.getFullYear(),
-        month: today.getMonth(),
-        day: today.getDate(),
-    }
+
     const callVariablesHistory = async (data: GraphResponse) => {
         const baseMonetariaId = data.variables.baseMonetaria.idVariable;
-
+        const today = new Date();
+        const date = {
+            year: today.getFullYear(),
+            month: today.getMonth() + 1,
+            day: today.getDate(),
+        }
+        const dateSixMonthAgo = {
+            year: date.month - 6 >= 1 ? date.year : date.year - 1,
+            month: date.month - 6 >= 1 ? date.month - 6 : 12 + (date.month - 6),
+            day: date.day,
+        }
         try {
             const baseMonetariaHistoryPromise = variableHistoryFetch({
                 params: {
                     id: baseMonetariaId as number,
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
+                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
                     endDate: `${date.year}-${date.month}-${date.day}`,
                 },
                 abortController: abortController.current
@@ -108,7 +113,7 @@ export const BcraSwiper = () => {
             const inflacionInteranualHistoryPromise = variableHistoryFetch({
                 params: {
                     id: data?.variables?.inflacionInteranual.idVariable as number,
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
+                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
                     endDate: `${date.year}-${date.month}-${date.day}`,
                 },
                 abortController: abortController.current
@@ -116,7 +121,7 @@ export const BcraSwiper = () => {
             const inflacionMensualHistoryPromise = variableHistoryFetch({
                 params: {
                     id: data?.variables?.inflacionMensual.idVariable as number,
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
+                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
                     endDate: `${date.year}-${date.month}-${date.day}`,
                 },
                 abortController: abortController.current
@@ -124,7 +129,7 @@ export const BcraSwiper = () => {
             const uvaHistoryPromise = variableHistoryFetch({
                 params: {
                     id: data?.variables?.uva.idVariable as number,
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
+                    startDate: `${dateSixMonthAgo.year}-${date.month}-${date.day}`,
                     endDate: `${date.year}-${date.month}-${date.day}`,
                 },
                 abortController: abortController.current
@@ -132,7 +137,7 @@ export const BcraSwiper = () => {
             const reservasInternacionalesHistoryPromise = variableHistoryFetch({
                 params: {
                     id: data?.variables?.reservasInternacionales.idVariable as number,
-                    startDate: `${date.year - 1}-${date.month}-${date.day}`,
+                    startDate: `${dateSixMonthAgo.year}-${date.month}-${date.day}`,
                     endDate: `${date.year}-${date.month}-${date.day}`,
                 },
                 abortController: abortController.current
@@ -182,7 +187,7 @@ export const BcraSwiper = () => {
     return (
         <Box sx={{ width: { xs: '100%', lg: '50%' }, m: '2rem 0' }}>
             <Divider />
-            <Typography variant={'h3'} sx={{ fontSize: '1.4rem', textAlign: 'center', p: 1 }}>Variables Bcra</Typography>
+            <Typography variant={'h3'} sx={{ fontSize: '1.4rem', textAlign: 'center', p: 1 }}>Variables Bcra (Ultimos 6 meses)</Typography>
             <Swiper
                 style={{ width: '100%' }}
                 spaceBetween={30}

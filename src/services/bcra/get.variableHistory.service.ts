@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosBcraServer } from "@/app/api/axios.instance";
 
 interface Props {
     abortController?: AbortController
@@ -12,7 +12,7 @@ interface VaraibleHistoryParams {
 
 export const variableHistory = async ({ abortController, params }: Props) => {
     try {
-        const response = await axios.get<VariableHistoryResponse>(`https://api.bcra.gob.ar/estadisticas/v1/datosvariable/${params.id}/${params.startDate}/${params.endDate}`, { signal: abortController?.signal });
+        const response = await axiosBcraServer.get<VariableHistoryResponse>(`/datosvariable/${params.id}/${params.startDate}/${params.endDate}`, { signal: abortController?.signal });
         return response.data.results
     } catch (error) {
         throw error;
@@ -28,5 +28,5 @@ interface VariableHistoryResponse {
 export interface VariableHistory {
     idVariable: number,
     fecha: string,
-    valor: string
+    valor: number
 }

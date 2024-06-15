@@ -50,6 +50,10 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
         name: 'Calculadora hipotecaria',
         href: '/calculadora-hipotecaria/sistema-frances',
     },
+    {
+        name: 'Informacion',
+        href: '/info',
+    },
     ]
     const path = usePathname();
     const partialPath = path.substring(

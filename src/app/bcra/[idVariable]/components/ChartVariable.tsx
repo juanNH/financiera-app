@@ -14,6 +14,7 @@ import { useTheme, Paper, Box, Typography } from '@mui/material';
 import { Line } from 'react-chartjs-2'
 import { VariableHistory } from '@/services/bcra/get.variableHistory.service';
 import { DataState } from '@/commons/models/structure.interface';
+import { TooltipContextTitle } from '@/commons/models/chartjs.types';
 
 ChartJS.register(
     CategoryScale,
@@ -24,6 +25,13 @@ ChartJS.register(
     Tooltip,
     Legend
 );
+interface DataSet {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    yAxisID: string;
+}
 interface Props {
     variables: DataState<VariableHistory[]>,
     graphText?: string,
@@ -31,10 +39,6 @@ interface Props {
 export const ChartVariable = ({ variables, graphText = "Cargando..." }: Props) => {
     const theme = useTheme();
     const textColor = theme.palette.text.primary;
-    let label = 'Variacion durante'
-    if (variables.data.length) {
-        label += ` ${variables?.data[0].fecha} - ${variables?.data[variables.data.length - 1].fecha}`;
-    }
     if (variables.isError) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
@@ -62,6 +66,13 @@ export const ChartVariable = ({ variables, graphText = "Cargando..." }: Props) =
                     color: textColor,
                 }
             },
+            tooltip: {
+                callbacks: {
+                    title: function (ctx: any | TooltipContextTitle<DataSet>[]) {
+                        return `Variacion el ${ctx[0].label}`;
+                    },
+                }
+            },
         },
         scales: {
             y: {
@@ -81,9 +92,9 @@ export const ChartVariable = ({ variables, graphText = "Cargando..." }: Props) =
         labels,
         datasets: [
             {
-                label: label,
+                label: 'Valor en la fecha',
                 labelColor: 'red',
-                data: variables.data.map(item => Number(item.valor.replace(/\./g, "").replace(",", "."))),
+                data: variables.data.map(item => Number(item.valor.toString().replace(/\./g, "").replace(",", "."))),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 yAxisID: 'y',

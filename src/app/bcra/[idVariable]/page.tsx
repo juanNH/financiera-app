@@ -16,6 +16,17 @@ interface DateObj {
 }
 
 export default function Page() {
+    const today = new Date();
+    const date: DateObj = {
+        year: today.getFullYear(),
+        month: today.getMonth() + 1,
+        day: today.getDate(),
+    }
+    const dateSixMonthAgo = {
+        year: date.month - 6 >= 1 ? date.year : date.year - 1,
+        month: date.month - 6 >= 1 ? date.month - 6 : 12 + (date.month - 6),
+        day: date.day,
+    }
     const [variableHistory, setVariableHistory] = useState<DataState<VariableHistory[]>>({
         data: [],
         isLoading: true,
@@ -32,12 +43,6 @@ export default function Page() {
         path.lastIndexOf("/") + 1,
         path.length,
     );
-    const today = new Date();
-    const date: DateObj = {
-        year: today.getFullYear(),
-        month: today.getMonth(),
-        day: today.getDate(),
-    }
     const handleSearchHistory = (startDate: Date, endDate: Date) => {
         callApi({
             year: startDate.getFullYear(),
@@ -49,6 +54,12 @@ export default function Page() {
             day: endDate.getDate(),
         })
     }
+
+    /**
+     * Function to fetch bcra history data.
+     * @param startDate Date to start queu.
+     * @param endDate Date to end queu.
+     */
     const callApi = async (startDate: DateObj, endDate: DateObj) => {
         try {
             setVariableHistory({
@@ -94,7 +105,8 @@ export default function Page() {
         }
     }
     useEffect(() => {
-        callApi({ ...date, year: date.year - 1 }, date)
+
+        callApi(dateSixMonthAgo, date)
         return () => {
             abortController.current.abort();
         }
@@ -102,7 +114,7 @@ export default function Page() {
     return (
         <main>
             <DateFormSection
-                startDate={`${date.day > 9 ? date.day : '0' + date.day.toString()}/${date.month > 9 ? date.month : '0' + date.month.toString()}/${date.year - 1}`}
+                startDate={`${dateSixMonthAgo.day > 9 ? dateSixMonthAgo.day : '0' + dateSixMonthAgo.day.toString()}/${dateSixMonthAgo.month > 9 ? dateSixMonthAgo.month : '0' + dateSixMonthAgo.month.toString()}/${dateSixMonthAgo.year}`}
                 endDate={`${date.day > 9 ? date.day : '0' + date.day.toString()}/${date.month > 9 ? date.month : '0' + date.month.toString()}/${date.year}`}
                 handleSearchHistory={handleSearchHistory}
                 dataIsLoading={variableHistory.isLoading}
