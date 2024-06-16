@@ -18,12 +18,8 @@ export const metadata: Metadata = {
   },
 };
 export default async function Page() {
-  let data:BcraVariable[] = [];
-  try {
-    data = await variableListBcra() || [];
-  } catch (error) {
-    console.error(error)
-  }
+    const data = await variableListBcra() || [];
+    console.log(data)
   return (
     <main>
       <DescriptionSection />
