@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   keywords: ['Aplicaciones financieras', 'Finanzas', 'Presupuesto', 'Planificación financiera', 'Criptomonedas', 'Análisis financiero', 'Educación financiera'],
   authors: [{ name: "Juan", url: "https://www.linkedin.com/in/juannherrerad/" }],
   twitter: {
-    title: 'MiFinanciero',
-    description: 'MiFinanciero es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.',
+    title: 'FinherArg',
+    description: 'FinherArg es una aplicación que tiene el fin de poder brindar datos, herramientas y datos financieros a los usuarios.',
   },
 };
 
