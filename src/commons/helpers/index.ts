@@ -1,1 +1,1 @@
-export * from './roundToTwoDecimals'
+export * from './roundToTwoDecimals';

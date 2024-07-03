@@ -13,6 +13,7 @@ import { DataState } from '@/commons/models/structure.interface';
 import { VariableHistory, variableHistory as variableHistoryFetch } from '@/services/bcra/get.variableHistory.service'
 import Link from 'next/link';
 import { Typography, Box, Divider, useTheme } from '@mui/material';
+import { boolean } from 'zod';
 
 const query = gql`
 query{  
@@ -67,11 +68,11 @@ interface GraphResponse {
     }
 }
 interface VariablesHistory {
-    baseMonetaria: VariableHistory[],
-    inflacionMensual: VariableHistory[],
-    inflacionInteranual: VariableHistory[],
-    uva: VariableHistory[],
-    reservasInternacionales: VariableHistory[],
+    baseMonetaria: { data: VariableHistory[], isError: boolean },
+    inflacionMensual: { data: VariableHistory[], isError: boolean },
+    inflacionInteranual: { data: VariableHistory[], isError: boolean },
+    uva: { data: VariableHistory[], isError: boolean },
+    reservasInternacionales: { data: VariableHistory[], isError: boolean },
 }
 export const BcraSwiper = () => {
     const abortController = useRef(new AbortController())
@@ -80,16 +81,15 @@ export const BcraSwiper = () => {
         isLoading: true,
         isError: false,
         data: {
-            baseMonetaria: [],
-            inflacionInteranual: [],
-            inflacionMensual: [],
-            uva: [],
-            reservasInternacionales: [],
+            baseMonetaria: { data: [], isError: false },
+            inflacionInteranual: { data: [], isError: false },
+            inflacionMensual: { data: [], isError: false },
+            uva: { data: [], isError: false },
+            reservasInternacionales: { data: [], isError: false },
         }
     })
 
     const callVariablesHistory = async (data: GraphResponse) => {
-        const baseMonetariaId = data.variables.baseMonetaria.idVariable;
         const today = new Date();
         const date = {
             year: today.getFullYear(),
@@ -101,79 +101,72 @@ export const BcraSwiper = () => {
             month: date.month - 6 >= 1 ? date.month - 6 : 12 + (date.month - 6),
             day: date.day,
         }
-        try {
-            const baseMonetariaHistoryPromise = variableHistoryFetch({
-                params: {
-                    id: baseMonetariaId as number,
-                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
-                },
-                abortController: abortController.current
-            });
-            const inflacionInteranualHistoryPromise = variableHistoryFetch({
-                params: {
-                    id: data?.variables?.inflacionInteranual.idVariable as number,
-                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
-                },
-                abortController: abortController.current
-            });
-            const inflacionMensualHistoryPromise = variableHistoryFetch({
-                params: {
-                    id: data?.variables?.inflacionMensual.idVariable as number,
-                    startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
-                },
-                abortController: abortController.current
-            });
-            const uvaHistoryPromise = variableHistoryFetch({
-                params: {
-                    id: data?.variables?.uva.idVariable as number,
-                    startDate: `${dateSixMonthAgo.year}-${date.month}-${date.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
-                },
-                abortController: abortController.current
-            });
-            const reservasInternacionalesHistoryPromise = variableHistoryFetch({
-                params: {
-                    id: data?.variables?.reservasInternacionales.idVariable as number,
-                    startDate: `${dateSixMonthAgo.year}-${date.month}-${date.day}`,
-                    endDate: `${date.year}-${date.month}-${date.day}`,
-                },
-                abortController: abortController.current
-            });
-            const [
-                baseMonetariaHistoryResponse,
-                inflacionInteranualHistoryResponse,
-                inflacionMensualHistoryResponse,
-                uvaHistoryResponse,
-                reservasInternacionalesHistoryResponse,
-            ] = await Promise.all([
-                baseMonetariaHistoryPromise,
-                inflacionInteranualHistoryPromise,
-                inflacionMensualHistoryPromise,
-                uvaHistoryPromise,
-                reservasInternacionalesHistoryPromise
-            ])
-            setVariablesHistory({
-                ...variablesHistory,
-                isError: false,
-                isLoading: false,
-                data: {
-                    baseMonetaria: baseMonetariaHistoryResponse,
-                    inflacionInteranual: inflacionInteranualHistoryResponse,
-                    inflacionMensual: inflacionMensualHistoryResponse,
-                    uva: uvaHistoryResponse,
-                    reservasInternacionales: reservasInternacionalesHistoryResponse,
-                }
-            })
-        } catch (error) {
-            console.error(error);
-            setVariablesHistory({
-                ...variablesHistory,
-                isError: true,
-            })
-        }
+        const baseMonetariaHistoryPromise = variableHistoryFetch({
+            params: {
+                id: data.variables.baseMonetaria.idVariable as number,
+                startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
+                endDate: `${date.year}-${date.month}-${date.day}`,
+            },
+            abortController: abortController.current
+        });
+        const inflacionInteranualHistoryPromise = variableHistoryFetch({
+            params: {
+                id: data?.variables?.inflacionInteranual.idVariable as number,
+                startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
+                endDate: `${date.year}-${date.month}-${date.day}`,
+            },
+            abortController: abortController.current
+        });
+        const inflacionMensualHistoryPromise = variableHistoryFetch({
+            params: {
+                id: data?.variables?.inflacionMensual.idVariable as number,
+                startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
+                endDate: `${date.year}-${date.month}-${date.day}`,
+            },
+            abortController: abortController.current
+        });
+        const uvaHistoryPromise = variableHistoryFetch({
+            params: {
+                id: data?.variables?.uva.idVariable as number,
+                startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
+                endDate: `${date.year}-${date.month}-${date.day}`,
+            },
+            abortController: abortController.current
+        });
+        const reservasInternacionalesHistoryPromise = variableHistoryFetch({
+            params: {
+                id: data?.variables?.reservasInternacionales.idVariable as number,
+                startDate: `${dateSixMonthAgo.year}-${dateSixMonthAgo.month}-${dateSixMonthAgo.day}`,
+                endDate: `${date.year}-${date.month}-${date.day}`,
+            },
+            abortController: abortController.current
+        });
+        const [
+            baseMonetariaHistoryResponse,
+            inflacionInteranualHistoryResponse,
+            inflacionMensualHistoryResponse,
+            uvaHistoryResponse,
+            reservasInternacionalesHistoryResponse,
+        ] = await Promise.allSettled([
+            baseMonetariaHistoryPromise,
+            inflacionInteranualHistoryPromise,
+            inflacionMensualHistoryPromise,
+            uvaHistoryPromise,
+            reservasInternacionalesHistoryPromise
+        ])
+        setVariablesHistory({
+            ...variablesHistory,
+            isError: false,
+            isLoading: false,
+            data: {
+                ...variablesHistory.data,
+                baseMonetaria: baseMonetariaHistoryResponse.status === 'fulfilled' ? { data: baseMonetariaHistoryResponse.value, isError: false } : { data: [], isError: true },
+                inflacionInteranual: inflacionInteranualHistoryResponse.status === 'fulfilled' ? { data: inflacionInteranualHistoryResponse.value, isError: false } : { data: [], isError: true },
+                inflacionMensual: inflacionMensualHistoryResponse.status === 'fulfilled' ? { data: inflacionMensualHistoryResponse.value, isError: false } : { data: [], isError: true },
+                uva: uvaHistoryResponse.status === 'fulfilled' ? { data: uvaHistoryResponse.value, isError: false } : { data: [], isError: true },
+                reservasInternacionales: reservasInternacionalesHistoryResponse.status === 'fulfilled' ? { data: reservasInternacionalesHistoryResponse.value, isError: false } : { data: [], isError: true },
+            }
+        })
     }
     const theme = useTheme();
     const backgroundColor = theme.palette.background.paper;
@@ -217,7 +210,8 @@ export const BcraSwiper = () => {
                     </Box>
                     <ChartVariable variables={{
                         ...variablesHistory,
-                        data: variablesHistory.data.inflacionMensual,
+                        data: variablesHistory.data.inflacionMensual.data,
+                        isError:variablesHistory.data.inflacionMensual.isError,
                     }} graphText={variablesGraph?.variables?.inflacionMensual.descripcion || undefined} />
                 </SwiperSlide>
                 <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
@@ -232,7 +226,8 @@ export const BcraSwiper = () => {
                     </Box>
                     <ChartVariable variables={{
                         ...variablesHistory,
-                        data: variablesHistory.data.inflacionInteranual,
+                        data: variablesHistory.data.inflacionInteranual.data,
+                        isError:variablesHistory.data.inflacionInteranual.isError,
                     }} graphText={variablesGraph?.variables?.inflacionInteranual.descripcion || undefined} />
                 </SwiperSlide>
                 <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
@@ -247,7 +242,8 @@ export const BcraSwiper = () => {
                     </Box>
                     <ChartVariable variables={{
                         ...variablesHistory,
-                        data: variablesHistory.data.uva,
+                        data: variablesHistory.data.uva.data,
+                        isError:variablesHistory.data.uva.isError,
                     }} graphText={variablesGraph?.variables?.uva.descripcion || undefined} />
                 </SwiperSlide>
                 <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
@@ -262,7 +258,8 @@ export const BcraSwiper = () => {
                     </Box>
                     <ChartVariable variables={{
                         ...variablesHistory,
-                        data: variablesHistory.data.baseMonetaria,
+                        data: variablesHistory.data.baseMonetaria.data,
+                        isError:variablesHistory.data.baseMonetaria.isError,
                     }} graphText={variablesGraph?.variables?.baseMonetaria.descripcion || undefined} />
                 </SwiperSlide>
                 <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
@@ -277,7 +274,8 @@ export const BcraSwiper = () => {
                     </Box>
                     <ChartVariable variables={{
                         ...variablesHistory,
-                        data: variablesHistory.data.reservasInternacionales,
+                        data: variablesHistory.data.reservasInternacionales.data,
+                        isError: variablesHistory.data.reservasInternacionales.isError,
                     }} graphText={variablesGraph?.variables?.reservasInternacionales.descripcion || undefined} />
                 </SwiperSlide>
             </Swiper>
