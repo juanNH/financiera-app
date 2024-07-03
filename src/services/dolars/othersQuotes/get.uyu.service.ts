@@ -12,10 +12,11 @@ interface Props {
  * @returns {Promise<DolarResponse>} Api promise response.
  */
 
-export async function uyuQuote({ abortController }: Props): Promise<DolarResponse> {
+export async function uyuQuote({ abortController }: Props): Promise<Dolar> {
     try {
-        const { data } =  await axiosDolarApiServer.get<DolarResponse>('/cotizaciones/uyu', { signal: abortController?.signal }); 
-        return data;
+        const response = await axiosDolarApiServer.get<DolarResponse>('/cotizaciones/uyu', { signal: abortController?.signal }); // Include params object
+        const responseAdapted = dolarAdapter(response.data);
+        return responseAdapted;
     } catch (error) {
         console.error('Error fetching data:', error);
         throw error;
