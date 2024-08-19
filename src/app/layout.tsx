@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { StyledRoot } from "./components/StyledRoot";
 import { ApolloWrapper } from "@/lib/apolloWrapper";
+import { Providers } from "./components/Providers";
 
 
 export const metadata: Metadata = {
@@ -27,14 +28,16 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body style={{ margin: '4rem 0 0 0' }}>
-        <ApolloWrapper>
-          <AppRouterCacheProvider>
-            <StyledRoot>
-              {children}
-            </StyledRoot>
-          </AppRouterCacheProvider>
-        </ApolloWrapper>
+      <body style={{ margin: '4rem 0 0 0' }} suppressHydrationWarning={true}>
+        <Providers>
+          <ApolloWrapper>
+            <AppRouterCacheProvider>
+              <StyledRoot>
+                {children}
+              </StyledRoot>
+            </AppRouterCacheProvider>
+          </ApolloWrapper>
+        </Providers>
       </body>
     </html>
   );

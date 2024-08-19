@@ -11,9 +11,6 @@ import {
     ListItemButton,
     ListItemText,
     Drawer,
-    ToggleButtonGroup,
-    ToggleButton,
-    Grid,
     AppBar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,14 +19,13 @@ import { usePathname } from 'next/navigation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useState } from 'react';
 import { Themes } from '../theme';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { DrawerConfiguration } from './DragetConfiguration';
+
 interface NavbarProps {
     handleChangeTheme: (theme: Themes) => void;
     themeSelected: Themes;
 }
-const navItems = ['Home', 'About', 'Contact'];
 const drawerWidth = 240;
 
 export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps) {
@@ -61,6 +57,7 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
         path.lastIndexOf("/") || path.indexOf("/") + 5,
     );
     const [isConfigOpen, setIsConfigOpen] = useState(false)
+
     return (
         <>
             <AppBar color='secondary' component="nav">
@@ -235,28 +232,3 @@ export default function Navbar({ handleChangeTheme, themeSelected }: NavbarProps
 }
 
 
-interface DrawerConfigurationProps {
-    handleChangeTheme: (theme: Themes) => void;
-    themeSelected: Themes;
-}
-const DrawerConfiguration = ({ handleChangeTheme, themeSelected }: DrawerConfigurationProps) => {
-
-    return (
-        <Grid
-            sx={{ width: '300px', display: 'flex', alignContent: 'center', flexDirection: 'column' }}
-            role="configuration"
-            container
-        >
-            <Grid item xs={12}>
-                <Typography variant='h6' sx={{ textAlign: 'center' }}>Modo:</Typography>
-                <ToggleButtonGroup
-                    value={themeSelected}
-                    aria-label="Themes selection"
-                >
-                    <ToggleButton style={{ color: "rgba(232, 195, 158, 1)" }} onClick={() => handleChangeTheme(Themes.LIGTH)} value={Themes.LIGTH}><LightModeIcon />Claro</ToggleButton>
-                    <ToggleButton onClick={() => handleChangeTheme(Themes.DARK)} value={Themes.DARK}><DarkModeIcon />Oscuro</ToggleButton>
-                </ToggleButtonGroup>
-            </Grid>
-        </Grid >
-    )
-}
