@@ -3,7 +3,6 @@ import { Typography, CardContent, Paper } from '@mui/material';
 
 import { Dolar } from '@/app/api/dolar/adapter';
 
-
 export const QuoteCard = (quote: Dolar) => {
     const formattedDate = formatDate(quote.updateDate);
     return (

@@ -196,7 +196,6 @@ export const BcraSwiper = () => {
                 }}
                 navigation={true}
                 modules={[Pagination, Navigation, Autoplay]}
-                className="mySwiper"
             >
                 <SwiperSlide style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', background: backgroundColor }}>
                     <Box>

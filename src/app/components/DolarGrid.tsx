@@ -1,13 +1,11 @@
-'use client'
-import React, { Suspense, useRef } from 'react'
+import React, { Suspense } from 'react'
 import { Grid, Skeleton } from '@mui/material';
 import { QuoteCard } from '@/commons/components/QuoteCard';
 import { range } from 'lodash';
 import { dolars as dolarsFetch } from '@/services/dolars/get.dolars.service';
 
 export const DolarGrid = () => {
-    const abortController = useRef(new AbortController())
-    const dolars = dolarsFetch({ abortController: abortController.current });
+    const dolars = dolarsFetch({ });
 
     return (
         <Grid container spacing={2} sx={{ p: '1rem 0' }}>

@@ -27,7 +27,7 @@ const handler = NextAuth({
                         "created_at": string,
                         "id": number
                     }
-                }>('/user/register',
+                }>('/user/login',
                     {
                         email: user.email,
                         name: user.name,

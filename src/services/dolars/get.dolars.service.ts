@@ -14,7 +14,7 @@ interface Props {
 
 export async function dolars({ abortController }: Props): Promise<Dolar[]> {
     try {
-        const response = await axiosDolarApiServer.get<DolarResponse[]>('/dolares', { signal: abortController?.signal }); // Include params object
+        const response = await axiosDolarApiServer.get<DolarResponse[]>('/dolares', { signal: abortController?.signal });
         const responseAdapted = dolarsAdapter(response.data);
         return responseAdapted;
     } catch (error) {
